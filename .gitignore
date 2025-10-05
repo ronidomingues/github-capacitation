@@ -1,0 +1,73 @@
+# Abaixo vão nomes de arquivos, extensões ou diretórios que você quer que o Git ignore durante o processo de versionamento.
+## .gitignore para projetos LaTeX;
+### Arquivos temporários e auxiliares do LaTeX
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.upa
+*.upb
+### Arquivos de saída (gerados pela compilação)
+*.dvi
+*.ps
+*.eps
+*.svg
+### Arquivos auxiliares de compiladores específicos
+#### latexmk
+*.latexmk
+#### arara
+arara.log
+#### bibtex
+*.bbl
+*.blg
+#### glossaries
+*.ist
+#### listings
+*.lol
+### Pastas temporárias de IDEs
+#### VSCode
+.vscode/
+#### TeXstudio
+*.synctex.gz(busy)
+#### TeXworks
+*.pdfsync
+#### Overleaf local
+output/
+build/
+#
+# Abaixo vão arquivos e pastas que você deseja manter no versionamento do projeto.
+!*.tex
+!*.bib
+!*.sty
+!*.cls
+!*.png
+!*.jpg
+!*.jpeg
+!*.pdf
+!*.eps
+!*.svg
+!*.zip
+!*.rar
+!*.7z
