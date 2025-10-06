@@ -28,7 +28,10 @@ jobs:
       - name: 📦 Instalar LaTeX e dependências
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-latex-beamer texlive-publishers latexmk
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository universe
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-publishers latexmk
 
       # 5️⃣ Compilar todos os arquivos .tex da pasta materials
       - name: 🧱 Compilar todos os arquivos .tex
