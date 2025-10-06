@@ -8,10 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04   # Base moderna, GLIBC compatível
-      options: --user root   # Para poder instalar pacotes
-
+    
     steps:
       # 1️⃣ Pegar os arquivos do repositório
       - name: 📥 Checkout repositório
