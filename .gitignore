@@ -1,4 +1,5 @@
 # Abaixo vão nomes de arquivos, extensões ou diretórios que você quer que o Git ignore durante o processo de versionamento.
+./materials/presence_list.tex
 ## .gitignore para projetos LaTeX;
 ### Arquivos temporários e auxiliares do LaTeX
 *.aux
