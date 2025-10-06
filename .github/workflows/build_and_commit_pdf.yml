@@ -34,6 +34,8 @@ jobs:
           sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-publishers texlive-lang-portuguese latexmk
 
       # 5️⃣ Compilar todos os arquivos .tex da pasta materials
+      # Meu erro aqui é que na pasta materials tem um arquivo .tex que não compila (ele não possui cabeçalho LaTeX é um arquivo auxiliar)
+      # Então corrigi com um if para pular esse arquivo específico - (tempo para a localização do erro: 2hs)
       - name: 🧱 Compilar todos os arquivos .tex
         run: |
           # Entra na pasta materials
@@ -41,6 +43,11 @@ jobs:
           # Loop para compilar todos os arquivos .tex da pasta
           for texfile in *.tex; do
             echo "Compilando $texfile ..."
+            if [ "$texfile" = "presence_list.tex" ]; then
+              echo "Pulando presence_list.tex (arquivo auxiliar)"
+              continue
+            fi
+            # Compilação dos arquivos .tex permitidos;
             latexmk -pdf -interaction=nonstopmode -f "$texfile"
           done
 
