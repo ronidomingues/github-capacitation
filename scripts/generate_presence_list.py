@@ -1,5 +1,6 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 # Caminho da pasta onde os arquivos de presença devem estar localizados;
 BASE_PATH = os.path.dirname(os.path.abspath(__file__)) # Determinando como base dos PATHs a seguir o diretório do script "generate_presence_list.py";
@@ -22,7 +23,9 @@ for name in sorted(files):
 
     # Obtendo a data de criação do arquivo;
     timestamp = os.path.getctime(path)
-    create_date = datetime.fromtimestamp(timestamp).strftime('%d/%m/%Y ás %H:%M:%S')
+    utc_time = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    local_time = utc_time.astimezone(ZoneInfo("America/Sao_Paulo"))
+    create_date = local_time.strftime('%d/%m/%Y às %H:%M:%S')
     content.append(f"   {person_name} & {create_date} \\\\")
     content.append("\\hline")
 content.append("\\end{tabularx}")
