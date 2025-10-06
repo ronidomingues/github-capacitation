@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: blang/latex:ctanfull  # Container Docker com TeX Live completo
+      image: ubuntu:22.04   # Base moderna, GLIBC compatível
+      options: --user root   # Para poder instalar pacotes
 
     steps:
       # 1️⃣ Pegar os arquivos do repositório
@@ -26,7 +27,13 @@ jobs:
       - name: 🧾 Gerar lista de presenças
         run: python3 scripts/generate_presence_list.py
 
-      # 4️⃣ Compilar todos os arquivos .tex da pasta materials
+      # 4️⃣ Instalar LaTeX e dependências
+      - name: 📦 Instalar LaTeX e dependências
+        run: |
+          apt-get update
+          apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-latex-beamer texlive-publishers latexmk
+
+      # 5️⃣ Compilar todos os arquivos .tex da pasta materials
       - name: 🧱 Compilar todos os arquivos .tex
         run: |
           # Entra na pasta materials
@@ -37,7 +44,7 @@ jobs:
             latexmk -pdf -interaction=nonstopmode "$texfile"
           done
 
-      # 5️⃣ Commitar PDFs gerados
+      # 6️⃣ Commitar PDFs gerados
       - name: 💾 Commitar PDFs gerados
         run: |
           git config user.name "github-actions[bot]"
