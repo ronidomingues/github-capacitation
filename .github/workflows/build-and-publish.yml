@@ -21,10 +21,10 @@ jobs:
       - name: 🧾 Gerar lista de presenças
         run: python3 scripts/generate_presence_list.py
 
-      - name: 🧰 Instalar LaTeX (versão básica)
+      - name: 🧰 Instalar LaTeX Completo
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y texlive-full
 
       - name: 🧱 Compilar PDF
         run: |
