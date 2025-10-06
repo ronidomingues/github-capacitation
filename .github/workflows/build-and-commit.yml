@@ -1,0 +1,47 @@
+name: Build LaTeX and Commit PDF
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: 🐍 Instalar Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 🧾 Gerar lista de presenças
+        run: python3 scripts/generate_presence_list.py
+
+      - name: 🧰 Instalar LaTeX Completo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-full
+
+      - name: 🧱 Compilar todos os arquivos .tex
+        run: |
+          # Entra na pasta materials
+          cd materials
+          # Loop para compilar todos os arquivos .tex da pasta
+          for texfile in *.tex; do
+            echo "Compilando $texfile ..."
+            latexmk -pdf -interaction=nonstopmode "$texfile"
+          done
+
+      - name: 💾 Commitar PDFs gerados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add materials/*.pdf
+          git commit -m "Atualizar PDFs compilados automaticamente [skip ci]" || echo "Nenhuma alteração para commitar"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
