@@ -41,7 +41,7 @@ jobs:
           # Loop para compilar todos os arquivos .tex da pasta
           for texfile in *.tex; do
             echo "Compilando $texfile ..."
-            latexmk -pdf -interaction=nonstopmode "$texfile"
+            latexmk -pdf -interaction=nonstopmode -f "$texfile"
           done
 
       # 6️⃣ Commitar PDFs gerados
