@@ -5,7 +5,7 @@ from zoneinfo import ZoneInfo
 # Caminho da pasta onde os arquivos de presença devem estar localizados;
 BASE_PATH = os.path.dirname(os.path.abspath(__file__)) # Determinando como base dos PATHs a seguir o diretório do script "generate_presence_list.py";
 FILES_PATH = os.path.join(BASE_PATH, "..", "presences") # Caminho para a pasta "../presences";
-OUTPUT_FILE = os.path.join(BASE_PATH, "..", "materials", "presence_list.tex") # Caminho para o arquivo de saída "../materials/presence_list.tex";
+OUTPUT_FILE = os.path.join(BASE_PATH, "..", "docs", "pages", "presence_list.tex") # Caminho para o arquivo de saída "../materials/presence_list.tex";
 
 # Coletando todos os arquivos .txt no caminho fornecido;
 files = [file for file in os.listdir(FILES_PATH) if file.endswith('.txt')]
