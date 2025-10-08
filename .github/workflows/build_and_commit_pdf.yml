@@ -44,8 +44,8 @@ jobs:
       # Então corrigi com um if para pular esse arquivo específico - (tempo para a localização do erro: 2hs)
       - name: 🧱 Compilar todos os arquivos .tex
         run: |
-          # Entra na pasta materials
-          cd materials
+          # Entra na pasta docs;
+          cd docs
           # Loop para compilar todos os arquivos .tex da pasta
           for texfile in *.tex; do
             echo "Compilando $texfile ..."
@@ -54,15 +54,17 @@ jobs:
               continue
             fi
             # Compilação dos arquivos .tex permitidos;
-            latexmk -pdf -interaction=nonstopmode -f "$texfile"
+            latexmk -xelatex -interaction=nonstopmode -f "$texfile"
           done
 
       # 6️⃣ Commitar PDFs gerados
       - name: 💾 Commitar PDFs gerados
         run: |
+          # Entrando na pasta docs novamente;
+          cd docs
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add materials/*.pdf
+          git add ./*.pdf
           git commit -m "Atualizar PDFs compilados automaticamente [skip ci]" || echo "Nenhuma alteração para commitar"
           git push
         env:
