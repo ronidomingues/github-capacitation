@@ -1,0 +1,44 @@
+% ----------------------------------------------------------------------------------------------------------------------
+% Definindo minhas cores bases;
+% ----------------------------------------------------------------------------------------------------------------------
+\definecolor{branco}{HTML}{FFFFFF}
+\definecolor{roxoescuro}{HTML}{1E1647}
+\definecolor{roxoclaro}{HTML}{614AD3}
+\definecolor{amarelo}{HTML}{FFFF00}
+% ----------------------------------------------------------------------------------------------------------------------
+% Configurações para ambiente de código;
+% ----------------------------------------------------------------------------------------------------------------------
+\lstdefinestyle{custom}{
+    backgroundcolor=\color{branco},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{roxoescuro},
+    upquote=true
+}
+% ----------------------------------------------------------------------------------------------------------------------
+% Configurações de Links;
+% ----------------------------------------------------------------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=roxoescuro,
+    filecolor=amarelo,
+    urlcolor=roxoclaro,
+    pdftitle={Guia Prático para a Capacitação em GitHub},
+    pdfpagemode=FullScreen,
+    pdfauthor={Ronivaldo Domingues de Andrade},
+    pdfsubject={Capacitação em GitHub},
+    pdfkeywords={GitHub, Controle de Versão, Colaboração, Repositórios, Branches, Commits, Pull Requests, CI/CD}
+}
+% ----------------------------------------------------------------------------------------------------------------------
+% Configurações do lstset do listings
+% ----------------------------------------------------------------------------------------------------------------------
+\lstset{
+    backgroundcolor=\color{gray!10},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    captionpos=b
+}

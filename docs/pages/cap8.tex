@@ -1,0 +1,109 @@
+\chapter{Assinaturas de Commits com chave GPG}
+
+\section{O que é?}
+A assinatura de commits com \textbf{GPG (GNU Privacy Guard)} é um recurso do Git que permite garantir a autenticidade e a integridade das alterações feitas em um repositório. Quando um commit é assinado, outras pessoas podem verificar que aquele commit foi realmente feito por você, evitando alterações fraudulentas ou commits não autorizados.
+
+\subsection{Importância das assinaturas GPG}
+\begin{itemize}
+    \item \textbf{Segurança:} Confirma que o commit foi feito pelo autor legítimo.
+    \item \textbf{Integridade:} Permite verificar se o commit não foi alterado após sua criação.
+    \item \textbf{Transparência:} Em projetos open source, facilita identificar contribuições confiáveis.
+\end{itemize}
+
+\section{Como usar?}
+
+\subsection{Passo 1: Instalar o GPG}
+Antes de assinar commits, você precisa instalar o GPG no seu sistema.
+
+\begin{itemize}
+    \item \textbf{Linux/Debian:}
+    \begin{verbatim}
+sudo apt update
+sudo apt install gnupg
+    \end{verbatim}
+
+    \item \textbf{Windows:} Instale o Gpg4win (\url{https://www.gpg4win.org/})
+
+    \item \textbf{MacOS:} 
+    \begin{verbatim}
+brew install gnupg
+    \end{verbatim}
+\end{itemize}
+
+\subsection{Passo 2: Gerar uma chave GPG}
+Para criar uma chave GPG pessoal, use o comando:
+
+\begin{verbatim}
+gpg --full-generate-key
+\end{verbatim}
+
+O terminal fará algumas perguntas:
+\begin{enumerate}
+    \item Tipo de chave: selecione \texttt{RSA and RSA (default)}.
+    \item Tamanho da chave: recomendo \texttt{4096 bits} para maior segurança.
+    \item Validade da chave: escolha o período de validade ou \texttt{0} para sem expiração.
+    \item Nome e e-mail: use o mesmo e-mail configurado no Git (\texttt{git config user.email}).
+    \item Senha: defina uma senha segura para proteger sua chave.
+\end{enumerate}
+
+\subsection{Passo 3: Listar chaves e copiar o ID da chave}
+Para ver as chaves criadas:
+
+\begin{verbatim}
+gpg --list-secret-keys --keyid-format LONG
+\end{verbatim}
+
+O resultado terá um formato como:
+\begin{verbatim}
+sec   rsa4096/ABCDEF1234567890 2025-01-01 [SC]
+      Key fingerprint = 1234 5678 9ABC DEF0 1234
+      5678 9ABC DEF0 1234 5670
+uid                 Seu Nome <seuemail@example.com>
+\end{verbatim}
+
+O que você precisa é do \textbf{ID da chave}, que no exemplo acima é \texttt{ABCDEF1234567890}.
+
+\subsection{Passo 4: Configurar o Git para usar a chave GPG}
+Diga ao Git qual chave usar para assinar commits:
+
+\begin{verbatim}
+git config --global user.signingkey ABCDEF1234567890
+git config --global commit.gpgsign true
+\end{verbatim}
+
+\subsection{Passo 5: Adicionar a chave GPG ao GitHub}
+Para que o GitHub reconheça seus commits assinados:
+\begin{enumerate}
+    \item Copie a chave pública:
+    \begin{verbatim}
+gpg --armor --export ABCDEF1234567890
+    \end{verbatim}
+    \item Entre no GitHub: \texttt{Settings > SSH and GPG keys > New GPG key}
+    \item Cole a chave pública e salve.
+\end{enumerate}
+
+\subsection{Passo 6: Fazer commits assinados}
+A partir de agora, todos os commits serão assinados automaticamente. Você também pode assinar commits individualmente:
+
+\begin{verbatim}
+git commit -S -m "Mensagem do commit"
+\end{verbatim}
+
+No GitHub, os commits assinados aparecerão com a etiqueta \textbf{Verified}.
+
+\subsection{Passo 7: Verificar commits assinados}
+Para verificar um commit localmente, use:
+
+\begin{verbatim}
+git log --show-signature
+\end{verbatim}
+
+O Git mostrará se o commit foi assinado corretamente e qual chave foi usada.
+
+\section{Dicas de segurança e boas práticas}
+\begin{itemize}
+    \item Proteja sua chave GPG com uma senha forte.
+    \item Faça backup da chave privada em um local seguro.
+    \item Não compartilhe sua chave privada.
+    \item Rotacione suas chaves periodicamente, se necessário.
+\end{itemize}

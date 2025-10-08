@@ -1,0 +1,77 @@
+% !TeX program = pdflatex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = pt_BR
+
+\documentclass[12pt, a4paper, openright, oneside, brazil]{abntex2}
+
+% Inclui o preâmbulo com todos os pacotes
+\input{pages/preambulo}
+% Inclui as configurações
+\input{pages/config}
+
+% Informações para CAPA e FOLHA DE ROSTO
+\title{Capacitação em GitHub}
+\author{Ronivaldo Domingues de Andrade}
+\local{Rio de Janeiro - RJ}
+\data{2025}
+\tipotrabalho{Guia Prático para Capacitação}
+\preambulo{Guia Prático para Capacitação em GitHub}
+
+\begin{document}
+\selectlanguage{brazil}
+
+% Elementos pré-textuais
+\imprimircapa
+\imprimirfolhaderosto
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+% Lista de siglas
+\begin{siglas}
+  \item[Winget] Windows Package Manager
+  \item[GitHub] Plataforma de Controle de Versão Distribuído
+  \item[git] Sistema de Controle de Versão Distribuído
+  \item[gh] GitHub CLI (Command Line Interface)
+  \item[git-lfs] Sistema de Controle de Versão Distribuído para Arquivos Grandes
+  \item[Merge] Fusão de Branches no GitHub
+  \item[Branch] Rama (branch) em um repositório GitHub
+  \item[Commit] Confirmação de Modificações em um Branch
+  \item[GitHub Pages] Serviço de Hospedagem de Páginas Estáticas
+  \item[GitHub Actions] Plataforma de Automação de Fluxos de Trabalho
+  \item[Pull Request (PR)] Solicitação de Mesclagem de Código
+  \item[Markdown] Linguagem de Marcação Leve
+  \item[README] Arquivo de Documentação do Projeto
+  \item[.gitignore] Arquivo de Configuração para Ignorar Arquivos no Git
+  \item[LICENSE] Arquivo de Licença do Projeto
+  \item[MIT] Licença MIT -> Massachusetts Institute of Technology License
+  \item[YML] YAML Ain't Markup Language -> YAML Não é uma Linguagem de Marcação de Texto, mas sim uma sintaxe para arquivos YAML
+  \item[GPG] GNU Privacy Guard -> Guarda de Privacidade GNU, ferramenta de criptografia de dados e comunicação segura.
+\end{siglas}
+
+\tableofcontents
+
+% Capítulos do trabalho
+\input{pages/cap1}    % Introdução
+\input{pages/cap2}    % GitHub
+\input{pages/cap3}    % Winget
+\input{pages/cap4}    % Git e GitHub CLI
+\input{pages/cap5}    % Repositórios
+\input{pages/cap6}    % Branches
+\input{pages/cap7}    % Commits e PRs
+\input{pages/cap8}    % Colaboração
+\input{pages/cap9}    % CI/CD
+\input{pages/conclusao}    % Conclusão
+
+% Referências
+\bibliographystyle{abntex2-alf}
+\bibliography{pages/references}
+
+% Elementos pós-textuais
+\input{pages/apendices}
+\input{pages/anexos}
+
+\end{document}

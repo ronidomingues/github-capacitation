@@ -1,0 +1,109 @@
+\chapter{Comandos Git}
+\label{ap:comandos_git}
+
+Este apêndice apresenta uma referência completa dos principais comandos Git organizados por categoria e funcionalidade.
+
+\section*{Comandos Git}
+
+\begin{longtable}{|p{3cm}|p{4cm}|p{7cm}|}
+    \caption{Comandos do Git} \label{tab:gitcommands} \\
+    \hline
+    \textbf{Comando} & \textbf{Categoria} & \textbf{Explicação Detalhada} \\
+    \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {\textbf{Continuação da Tabela: Comandos do Git}} \\
+    \hline
+    \textbf{Comando} & \textbf{Categoria} & \textbf{Explicação Detalhada} \\
+    \hline
+    \endhead
+    \multicolumn{3}{|r|}{Continua na próxima página} \\
+    \hline
+    \endfoot
+    \endlastfoot
+
+    git init & Configuração/Setup & Transforma o diretório atual em um repositório Git, criando o diretório.git. Pode ser executado com segurança em um diretório existente sem sobrescrever configurações. \\
+    \hline
+    git config & Configuração/Setup & Lê ou define variáveis de configuração em nível de sistema, global ou local. Essencial para definir a identidade (user.name, user.email) do autor do commit. \\
+    \hline
+    git clone [url] & Configuração/Setup & Cria uma cópia local de um repositório remoto. Configura automaticamente a referência 'origin' e faz o checkout da branch principal. \\
+    \hline
+    git add [file] & Snapshotting Básico & Move alterações de um arquivo do Working Tree para o Index (Staging Area), preparando-o para o próximo commit. \\
+    \hline
+    git status & Snapshotting Básico & Exibe o estado da Working Tree e do Index, listando arquivos modificados, staged ou não rastreados. \\
+    \hline
+    git diff & Snapshotting Básico & Mostra as diferenças entre o Working Tree e o Index (alterações não staged). \\
+    \hline
+    git diff --staged & Snapshotting Básico & Mostra as diferenças entre o Index (Staging Area) e o último commit (HEAD). \\
+    \hline
+    git commit -m "[msg]" & Snapshotting Básico & Salva o conteúdo atualmente no Index como um novo snapshot permanente (commit) na história. \\
+    \hline
+    git commit --amend & Manipulação Histórico & Altera o commit anterior, seja modificando sua mensagem ou adicionando/removendo arquivos. Isso reescreve o histórico, gerando um novo SHA. \\
+    \hline
+    git rm [file] & Gerenciamento Arquivo & Remove um arquivo do Working Tree e do Index. O uso de \texttt{--cached} remove apenas do Index, mantendo o arquivo local. \\
+    \hline
+    git mv [old][new] & Gerenciamento Arquivo & Move ou renomeia um arquivo de forma rastreada pelo Git. \\
+    \hline
+    git clean & Gerenciamento Arquivo & Remove arquivos não rastreados (untracked files) do Working Tree. \\
+    \hline
+    git reset --soft [hash] & Manipulação Histórico & Move o ponteiro HEAD para o commit, mas mantém o Index e o Working Tree intactos (alterações permanecem staged). \\
+    \hline
+    git reset --mixed [hash] & Manipulação Histórico & (Padrão) Move o HEAD para o commit e reseta o Index (desencena arquivos), preservando o Working Tree. \\
+    \hline
+    git reset --hard [hash] & Manipulação Histórico & Move o HEAD e reseta o Index e o Working Tree, descartando todas as mudanças locais desde o hash. Altamente destrutivo. \\
+    \hline
+    git branch & Branching/Navegação & Gerenciamento de branches: lista, cria ou deleta branches locais. \\
+    \hline
+    git checkout & Branching/Navegação & Comando legado multi-uso. Alterna entre branches ou restaura arquivos antigos/commits, podendo resultar em 'detached HEAD'. \\
+    \hline
+    git switch & Branching/Navegação & Comando moderno focado em alternar branches. Atualiza a Working Tree e o Index. Utilizado para criar novas branches de forma segura. \\
+    \hline
+    git merge [branch] & Integração/Merge & Integra alterações de uma branch na atual, criando um 'merge commit' se houver divergência. Operação não-destrutiva. \\
+    \hline
+    git rebase [base] & Integração/Rebase & Move ou reaplica commits para uma nova base, reescrevendo o histórico para mantê-lo linear. Ideal para branches locais e não publicadas. \\
+    \hline
+    git rebase -i [base] & Integração/Rebase & Modo interativo do rebase, permitindo squash (combinação), edição ou reordenação de commits. \\
+    \hline
+    git cherry-pick [hash] & Integração/Portabilidade & Aplica as alterações introduzidas por um único commit específico na branch atual, criando um novo commit equivalente. \\
+    \hline
+    git revert [hash] & Manipulação Histórico & Cria um novo commit que desfaz as alterações introduzidas por um commit anterior. Usado para desfazer mudanças em histórico compartilhado de forma segura. \\
+    \hline
+    git fetch & Sincronização Remota & Baixa dados (objetos e refs) de um repositório remoto para o repositório local, sem alterar o Working Tree ou Index (operação segura). \\
+    \hline
+    git pull & Sincronização Remota & Equivalente a git fetch seguido por uma integração (default: merge). Pode alterar o estado local e causar conflitos imediatamente (operação menos segura). \\
+    \hline
+    git push [remote][branch] & Sincronização Remota & Carrega commits locais para um repositório remoto. Exige uma operação fast-forward, a menos que \texttt{--force} seja utilizado. \\
+    \hline
+    git push --tags & Sincronização Remota & Envia tags locais para o repositório remoto. \\
+    \hline
+    git remote & Sincronização Remota & Gerencia os repositórios remotos rastreados (e.g., listar, adicionar, remover). \\
+    \hline
+    git log & Auditoria/Inspeção & Exibe o histórico de commits. \\
+    \hline
+    git shortlog & Auditoria/Inspeção & Fornece um resumo conciso do git log, agrupando commits por autor. \\
+    \hline
+    git show & Auditoria/Inspeção & Exibe informações detalhadas sobre um objeto Git (commit, tag, etc.). \\
+    \hline
+    git reflog & Auditoria/Recuperação & Registra as atualizações locais no HEAD e em outras referências, agindo como uma rede de segurança para recuperar commits perdidos após resets ou rebase. \\
+    \hline
+    git tag & Marcação/Utilitários & Cria, lista, deleta ou verifica objetos de tag, usados para marcar pontos estáticos (releases) no histórico. \\
+    \hline
+    git tag -a [name] & Marcação/Utilitários & Cria uma tag anotada (com metadados e mensagem), preferida para releases públicas. \\
+    \hline
+    git stash & Utilitários de Contexto & Salva temporariamente o Working Directory e o Index (alterações não comitadas) para permitir a troca de contexto. \\
+    \hline
+    git stash pop & Utilitários de Contexto & Aplica o último stash salvo e o remove da lista de stashes. \\
+    \hline
+    git stash apply & Utilitários de Contexto & Aplica o último stash salvo, mas o mantém na lista. \\
+    \hline
+    git submodule & Utilitários Avançados & Inicializa, atualiza ou inspeciona submódulos (repositórios aninhados). \\
+    \hline
+    git worktree & Utilitários Avançados & Gerencia múltiplas Working Trees (checkouts) do mesmo repositório, permitindo trabalhar em várias branches simultaneamente. \\
+    \hline
+    gitk & Utilitários Avançados & O navegador de repositório Git (ferramenta GUI). \\
+    \hline
+    scalar & Utilitários Avançados & Ferramenta projetada para gerenciar repositórios Git de grande escala (Large Git Repositories). \\
+    \hline
+    git sparse-checkout & Utilitários Avançados & Reduz a Working Tree para um subconjunto de arquivos rastreados, otimizando o desempenho em repositórios massivos. \\
+    \hline
+\end{longtable}

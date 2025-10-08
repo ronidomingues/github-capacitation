@@ -1,0 +1,298 @@
+\chapter{Commits, Merges e Pull Requests}
+
+\section{Introdução}
+Commits, merges e pull requests são elementos centrais no fluxo de trabalho com Git e plataformas como GitHub.  
+Um \textbf{commit} é uma unidade lógica de alteração no repositório; um \textbf{merge} integra mudanças de uma branch em outra; e um \textbf{pull request} (PR) é uma solicitação formal de revisão e integração de uma branch — normalmente usada em colaboração para revisar código, executar checks automáticos (CI) e registrar a decisão de integrar.
+
+\section{Commits}
+
+\subsection{O que é um commit}
+Um commit registra o estado do diretório de trabalho (os arquivos staged) em um nó do histórico do Git. Cada commit tem um identificador (SHA), metadata (autor, data) e uma mensagem que descreve a mudança.
+
+\subsection{Boas práticas de commits}
+\begin{itemize}
+  \item Faça commits atômicos: cada commit deve representar uma \emph{única} mudança lógica.  
+  \item Mensagens claras: use assunto imperativo curto (\(\sim\)50 caracteres) + linha em branco + corpo explicativo se necessário (72 caracteres por linha).  
+  \item Inclua referência a issues quando relevante (ex.: ``Closes \#42'').  
+  \item Evite commitar arquivos gerados (binários, dependências) — use \texttt{.gitignore}.  
+  \item Assine commits quando necessário: \texttt{git commit -S -m "..."} (GPG).
+\end{itemize}
+
+\subsection{Fazendo commits — passo a passo}
+\begin{enumerate}
+  \item Verificar o estado dos arquivos:
+  \begin{verbatim}
+  git status
+  \end{verbatim}
+  \item Ver as mudanças não staged:
+  \begin{verbatim}
+  git diff       # diferenças não adicionadas ao stage
+  git diff --staged  # diferenças preparadas para commit
+  \end{verbatim}
+  \item Adicionar alterações ao stage (todo arquivo ou interativo):
+  \begin{verbatim}
+  git add caminho/arquivo.txt  # adiciona arquivo específico
+  git add .                    # adiciona tudo (cuidado)
+  git add -p                   # adiciona parcialmente (patch)
+  \end{verbatim}
+  \item Criar o commit com boa mensagem:
+  \begin{verbatim}
+  git commit -m "Assunto curto em imperativo"
+  # ou para mensagem longa (editor):
+  git commit
+  \end{verbatim}
+  Exemplo de mensagem:
+  \begin{verbatim}
+  Corrige cálculo de juros
+
+  Ajusta a fórmula de cálculo para considerar juros compostos
+  quando o período é maior que 12 meses. Testes unitários
+  adicionados para cobrir casos de fronteira.
+  \end{verbatim}
+  \item Ver histórico resumido:
+  \begin{verbatim}
+  git log --oneline --graph --decorate --all
+  \end{verbatim}
+\end{enumerate}
+
+\subsection{Editar o último commit / corrigir mensagens}
+\begin{verbatim}
+# alterar o conteúdo do último commit (já staged)
+git commit --amend
+
+# alterar apenas a mensagem do último commit
+git commit --amend -m "Nova mensagem"
+\end{verbatim}
+\textbf{Atenção:} se o commit já foi enviado ao remoto, evite \texttt{--amend} sem combinar com a equipe — ele reescreve o histórico e exigirá push forçado.
+
+\subsection{Desfazer / alterar staging}
+\begin{verbatim}
+git restore --staged arquivo.txt   # remove do stage, mantém
+                                   # alteração no working tree
+
+git restore arquivo.txt            # descarta alteração no
+                                   # working tree (se não commitada)
+
+git reset --soft HEAD~1            # desfaz último commit, mantendo
+                                   # mudanças staged
+
+git reset --mixed HEAD~1           # desfaz último commit, mantendo
+                                   # mudanças no working tree
+                                   # (unstaged)
+
+git reset --hard HEAD~1            # desfaz último commit e 
+                                   # descarta mudanças (CUIDADO)
+\end{verbatim}
+
+\input{./pages/padroes_de_commit}
+
+\section{Merges}
+
+\subsection{Tipos de merge}
+\begin{description}
+  \item[Fast-forward] Se a branch destino não avançou desde que a feature foi criada, o Git apenas avança o ponteiro (sem novo commit de merge).
+  \item[Merge commit] Cria um commit de merge que documenta a união de dois históricos (útil para preservar contexto de branch).
+  \item[Rebase] Reaplica commits de uma branch sobre outra, produzindo um histórico linear (reduz ``ruído'' dos merges, mas reescreve histórico).
+\end{description}
+
+\subsection{Merge local com merge commit (passo a passo)}
+\begin{enumerate}
+  \item Atualize a branch principal:
+  \begin{verbatim}
+  git checkout main
+  git pull origin main
+  \end{verbatim}
+  \item Mudar para a branch de feature (se necessário):
+  \begin{verbatim}
+  git checkout feature/minha-feature
+  git pull origin feature/minha-feature
+  \end{verbatim}
+  \item Voltar para a branch de destino e fazer merge:
+  \begin{verbatim}
+  git checkout main
+  git merge --no-ff feature/minha-feature
+  # --no-ff força um commit de merge,
+  # preservando histórico da branch
+  \end{verbatim}
+  \item Caso não haja conflitos, o Git criará o commit de merge automaticamente. Em caso de conflitos, siga a seção "Resolver conflitos" abaixo.
+  \item Envie as mudanças para o remoto:
+  \begin{verbatim}
+  git push origin main
+  \end{verbatim}
+\end{enumerate}
+
+\subsection{Rebase (passo a passo) — para um histórico linear}
+\begin{enumerate}
+  \item Atualize a base:
+  \begin{verbatim}
+  git checkout main
+  git pull origin main
+  \end{verbatim}
+  \item Rebase da feature sobre a main:
+  \begin{verbatim}
+  git checkout feature/minha-feature
+  git rebase main
+  \end{verbatim}
+  \item Resolva conflitos (se aparecerem), use \texttt{git rebase --continue} e, ao final:
+  \begin{verbatim}
+  # force push (com cuidado) após reescrever histórico
+  git push --force-with-lease origin feature/minha-feature
+  \end{verbatim}
+  \item \textbf{Observação:} reescrever histórico (rebase + push forçado) requer coordenação com outros colaboradores.
+\end{enumerate}
+
+\subsection{Resolver conflitos — passo a passo}
+\begin{enumerate}
+  \item Ao encontrar conflito durante merge/rebase, o Git mostra arquivos conflitantes:
+  \begin{verbatim}
+  CONFLICT (content): Merge conflict in caminho/arquivo.txt
+  \end{verbatim}
+  \item Abra o arquivo e localize os marcadores:
+  \begin{verbatim}
+  <<<<<<< HEAD
+  conteúdo na branch atual (main)
+  =======
+  conteúdo vindo da branch feature/minha-feature
+  >>>>>>> feature/minha-feature
+  \end{verbatim}
+  \item Edite o arquivo para a versão desejada (manter, combinar ou reescrever o trecho).
+  \item Marque o conflito como resolvido:
+  \begin{verbatim}
+  git add caminho/arquivo.txt
+  # se for rebase:
+  git rebase --continue
+  # se for merge:
+  git commit   # caso o Git não tenha criado o commit automaticamente
+  \end{verbatim}
+  \item Se quiser abortar a operação:
+  \begin{verbatim}
+  git merge --abort    # durante um merge
+  git rebase --abort   # durante um rebase
+  \end{verbatim}
+\end{enumerate}
+
+\subsection{Squash e reescrita de commits (passo a passo)}
+\begin{enumerate}
+  \item Interative rebase para combinar commits locais:
+  \begin{verbatim}
+  git checkout feature/minha-feature
+  git rebase -i main
+  \end{verbatim}
+  \item No editor que abre, marque \texttt{squash} (ou \texttt{s}) nos commits que deseja unir ao commit anterior. Salve e feche.
+  \item Após o rebase, force push com segurança:
+  \begin{verbatim}
+  git push --force-with-lease origin feature/minha-feature
+  \end{verbatim}
+  \item Use \texttt{--force-with-lease} em vez de \texttt{--force} quando possível — ele evita sobrescrever pushes alheios.
+\end{enumerate}
+
+\section{Pull Requests (PR)}
+
+\subsection{O que é um Pull Request}
+Um PR é uma solicitação para integrar as mudanças de uma branch em outra (normalmente de uma branch de feature para \texttt{main} ou \texttt{develop}) e serve como ponto central para revisão de código, execução de pipelines de CI e documentação da mudança.
+
+\subsection{Fluxo básico — criando um PR (via web)}
+\begin{enumerate}
+  \item Crie uma branch local para a sua feature:
+  \begin{verbatim}
+  git checkout -b feature/minha-feature
+  \end{verbatim}
+  \item Faça commits locais e envie a branch para o remoto:
+  \begin{verbatim}
+  git push -u origin feature/minha-feature
+  \end{verbatim}
+  \item No repositório do GitHub, acesse \texttt{Pull requests} \(\rightarrow\) \texttt{New pull request}.
+  \item Selecione a \textbf{branch de origem} (feature/minha-feature) e a \textbf{branch de destino} (ex.: main).
+  \item Preencha o título e a descrição: explique o \textbf{porquê} e o \textbf{o que} foi alterado. Use referências a issues (ex.: ``Closes \#123'').
+  \item Configure revisores, labels, milestone e assignees.
+  \item Se ainda não está pronta, crie como \textbf{Draft pull request} (rascunho).
+  \item Aguarde revisão, corrija comentários fazendo novos commits na mesma branch e push — eles serão anexados automaticamente ao PR.
+  \item Quando aprovado, escolha a estratégia de merge (merge commit / squash and merge / rebase and merge) e realize o merge.
+\end{enumerate}
+
+\subsection{Criar e gerenciar PRs via GitHub CLI (passo a passo)}
+\begin{verbatim}
+# autentique (uma vez)
+gh auth login
+
+# depois de push da branch
+gh pr create --base main --head feature/minha-feature --title "Título do PR" --body "Descrição detalhada" --reviewer usuario1,usuario2
+
+# abrir PR como draft:
+gh pr create --draft --base main --head feature/minha-feature --fill
+
+# listar PRs locais:
+gh pr list
+
+# fechar ou mesclar via CLI:
+gh pr merge <numero-ou-url> --squash --delete-branch
+# ou
+gh pr merge <numero> --merge      # cria commit de merge
+gh pr merge <numero> --rebase     # rebase and merge
+\end{verbatim}
+
+\subsection{Checklist para revisão de Pull Request}
+\begin{itemize}
+  \item O PR tem um título e descrição claros (o \emph{porquê} e o \emph{o que});  
+  \item Testes automatizados adicionados/atualizados e pipeline CI passando;  
+  \item Código segue padrões de lint e estilo;  
+  \item Mudanças pequenas e focadas (um PR por responsabilidade);  
+  \item Documentação e comentários quando necessário;  
+  \item Evidências visuais (screenshots) quando há alterações de UI.  
+\end{itemize}
+
+\subsection{Depois do merge — limpeza e sincronização}
+\begin{verbatim}
+# atualizar a branch principal local
+git checkout main
+git pull origin main
+
+# remover branch remota (após merge)
+git push origin --delete feature/minha-feature
+
+# remover branch local
+git branch -d feature/minha-feature
+
+# caso a branch não possa ser deletada por não estar totalmente mesclada:
+git branch -D feature/minha-feature
+\end{verbatim}
+Também é útil rodar:
+\begin{verbatim}
+git fetch --prune
+\end{verbatim}
+para remover referências remotas deletadas.
+
+\section{Boas práticas e recomendações finais}
+\begin{itemize}
+  \item Mantenha PRs pequenos e revisáveis; grandes PRs demoram mais para receber feedback.  
+  \item Automatize checks com CI (testes, lint, análise estática) e impeça merge enquanto falharem (branch protection).  
+  \item Use \texttt{--force-with-lease} quando precisar reescrever histórico; nunca force sem checar se colegas não empurraram commits.  
+  \item Documente o fluxo do time (merge strategy preferida — ex.: squash para commits limpos, merge commit para histórico preservado).  
+  \item Escreva mensagens de commit úteis e mantenha um padrão no time (ex.: Conventional Commits) para facilitar geração automática de changelogs.
+\end{itemize}
+
+\section{Exemplos rápidos de comandos úteis}
+\begin{verbatim}
+# ver status e diferenças
+git status
+git diff
+git diff --staged
+
+# histórico e log
+git log --oneline --graph --decorate --all
+
+# adicionar parcialmente
+git add -p
+
+# rebase interativo (últimos 3 commits)
+git rebase -i HEAD~3
+
+# desfazer mudanças locais (trabalhe com cuidado)
+git restore arquivo.txt
+git reset --hard HEAD
+
+# forçar push com segurança
+git push --force-with-lease origin minha-branch
+\end{verbatim}
+
+% Fim do capítulo

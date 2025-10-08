@@ -1,0 +1,243 @@
+\chapter{Comandos GitHub CLI}
+\label{ap:comandos_github_cli}
+
+Este apêndice apresenta uma referência dos principais comandos do GitHub CLI (gh) organizados por funcionalidade.
+
+\section*{Comandos do GitHub-CLI (gh)}
+
+\begin{longtable}{|p{2cm}|p{2.3cm}|p{4cm}|p{6cm}|}
+    \caption{Comandos do GitHub-CLI (gh)} \label{tab:githubcli_commands} \\
+    \hline
+    \textbf{Comando Base} & \textbf{Subcomando} & \textbf{Explicação Funcional Detalhada} & \textbf{Exemplo de Sintaxe Chave} \\
+    \hline
+    \endfirsthead
+    \multicolumn{4}{c}%
+    {\textbf{Continuação da Tabela: Comandos do GitHub-CLI (gh)}} \\
+    \hline
+    \textbf{Comando Base} & \textbf{Subcomando} & \textbf{Explicação Funcional Detalhada} & \textbf{Exemplo de Sintaxe Chave} \\
+    \hline
+    \endhead
+    \multicolumn{4}{|r|}{\textit{Continua na próxima página}} \\
+    \hline
+    \endfoot
+    \endlastfoot
+    
+    gh alias & set & Cria um alias para um comando gh, permitindo atalhos personalizados para comandos frequentes & \texttt{gh alias set prc "pr create"} \\
+    \hline
+    gh alias & list & Lista todos os aliases configurados no GitHub CLI & \texttt{gh alias list} \\
+    \hline
+    gh alias & delete & Remove um alias previamente configurado & \texttt{gh alias delete prc} \\
+    \hline
+    gh auth & login & Autentica o usuário no GitHub via navegador web ou token & \texttt{gh auth login} \\
+    \hline
+    gh auth & logout & Remove a autenticação do usuário atual & \texttt{gh auth logout} \\
+    \hline
+    gh auth & status & Exibe o status de autenticação atual e usuário conectado & \texttt{gh auth status} \\
+    \hline
+    gh auth & refresh & Renova a autenticação para um host específico & \texttt{gh auth refresh -{-}hostname github.com} \\
+    \hline
+    gh auth & token & Exibe o token de autenticação atual & \texttt{gh auth token} \\
+    \hline
+    gh browse & - & Abre o repositório atual no navegador web & \texttt{gh browse} \\
+    \hline
+    gh browse & -{-}branch & Abre uma branch específica no navegador & \texttt{gh browse -{-}branch feature-branch} \\
+    \hline
+    gh browse & -{-}commit & Abre um commit específico no navegador & \texttt{gh browse -{-}commit abc123} \\
+    \hline
+    gh browse & -{-}issue & Abre uma issue específica no navegador & \texttt{gh browse -{-}issue 42} \\
+    \hline
+    gh browse & -{-}pull-request & Abre um pull request específico no navegador & \texttt{gh browse -{-}pull-request 15} \\
+    \hline
+    gh browse & -{-}settings & Abre as configurações do repositório no navegador & \texttt{gh browse -{-}settings} \\
+    \hline
+    gh browse & -{-}wiki & Abre a wiki do repositório no navegador & \texttt{gh browse -{-}wiki} \\
+    \hline
+    gh codespace & code & Abre um codespace no Visual Studio Code & \texttt{gh codespace code} \\
+    \hline
+    gh codespace & cp & Copia arquivos entre o sistema local e um codespace & \texttt{gh codespace cp local.txt remote:./} \\
+    \hline
+    gh codespace & create & Cria um novo codespace & \texttt{gh codespace create} \\
+    \hline
+    gh codespace & delete & Remove um codespace específico & \texttt{gh codespace delete my-codespace} \\
+    \hline
+    gh codespace & jupyter & Abre um codespace no JupyterLab & \texttt{gh codespace jupyter} \\
+    \hline
+    gh codespace & list & Lista todos os codespaces disponíveis & \texttt{gh codespace list} \\
+    \hline
+    gh codespace & logs & Exibe os logs de um codespace específico & \texttt{gh codespace logs my-codespace} \\
+    \hline
+    gh codespace & ports & Lista as portas encaminhadas de um codespace & \texttt{gh codespace ports} \\
+    \hline
+    gh codespace & ports forward & Encaminha uma porta do codespace para o local & \texttt{gh codespace ports forward 3000:4000} \\
+    \hline
+    gh codespace & ports visibility & Define a visibilidade de uma porta & \texttt{gh codespace ports visibility 3000:public} \\
+    \hline
+    gh codespace & ssh & Conecta-se a um codespace via SSH & \texttt{gh codespace ssh} \\
+    \hline
+    gh codespace & stop & Para um codespace em execução & \texttt{gh codespace stop my-codespace} \\
+    \hline
+    gh gist & create & Cria um novo gist a partir de arquivos ou entrada padrão & \texttt{gh gist create script.py} \\
+    \hline
+    gh gist & clone & Clona um gist específico para o sistema local & \texttt{gh gist clone abc123} \\
+    \hline
+    gh gist & delete & Remove um gist específico & \texttt{gh gist delete abc123} \\
+    \hline
+    gh gist & edit & Edita um gist existente & \texttt{gh gist edit abc123} \\
+    \hline
+    gh gist & list & Lista todos os gists do usuário & \texttt{gh gist list} \\
+    \hline
+    gh gist & view & Visualiza um gist específico no terminal & \texttt{gh gist view abc123} \\
+    \hline
+    gh issue & create & Cria uma nova issue no repositório & \texttt{gh issue create -{-}title "Bug" -{-}body "Descrição"} \\
+    \hline
+    gh issue & list & Lista issues do repositório com filtros opcionais & \texttt{gh issue list -{-}state open} \\
+    \hline
+    gh issue & status & Mostra o status das issues relevantes para o usuário & \texttt{gh issue status} \\
+    \hline
+    gh issue & close & Fecha uma issue específica & \texttt{gh issue close 42} \\
+    \hline
+    gh issue & comment & Adiciona um comentário a uma issue & \texttt{gh issue comment 42 -{-}body "Comentário"} \\
+    \hline
+    gh issue & delete & Remove uma issue específica & \texttt{gh issue delete 42} \\
+    \hline
+    gh issue & edit & Edita uma issue existente & \texttt{gh issue edit 42 -{-}title "Novo título"} \\
+    \hline
+    gh issue & lock & Trava os comentários de uma issue & \texttt{gh issue lock 42} \\
+    \hline
+    gh issue & reopen & Reabre uma issue fechada & \texttt{gh issue reopen 42} \\
+    \hline
+    gh issue & transfer & Transfere uma issue para outro repositório & \texttt{gh issue transfer 42 owner/repo} \\
+    \hline
+    gh issue & view & Exibe detalhes de uma issue específica & \texttt{gh issue view 42} \\
+    \hline
+    gh project & copy & Copia um projeto para um novo repositório ou organização & \texttt{gh project copy 1 -{-}draft -{-}target-owner novaorg} \\
+    \hline
+    gh project & create & Cria um novo projeto & \texttt{gh project create -{-}title "Meu Projeto"} \\
+    \hline
+    gh project & delete & Remove um projeto específico & \texttt{gh project delete 1} \\
+    \hline
+    gh project & edit & Edita as propriedades de um projeto & \texttt{gh project edit 1 -{-}title "Novo Título"} \\
+    \hline
+    gh project & field & Gerencia campos personalizados do projeto & \texttt{gh project field create 1 -{-}name "Prioridade"} \\
+    \hline
+    gh project & item & Gerencia itens dentro de um projeto & \texttt{gh project item add 1 -{-}url \url{https://github.com/owner/repo/issues/1}} \\
+    \hline
+    gh project & list & Lista projetos disponíveis & \texttt{gh project list -{-}owner owner} \\
+    \hline
+    gh project & view & Visualiza detalhes de um projeto específico & \texttt{gh project view 1} \\
+    \hline
+    gh pr & checks & Exibe os status checks de um pull request & \texttt{gh pr checks 15} \\
+    \hline
+    gh pr & close & Fecha um pull request específico & \texttt{gh pr close 15} \\
+    \hline
+    gh pr & comment & Adiciona um comentário a um pull request & \texttt{gh pr comment 15 -{-}body "Comentário"} \\
+    \hline
+    gh pr & create & Cria um novo pull request & \texttt{gh pr create -{-}title "Feature" -{-}body "Descrição"} \\
+    \hline
+    gh pr & diff & Exibe as diferenças introduzidas pelo pull request & \texttt{gh pr diff 15} \\
+    \hline
+    gh pr & edit & Edita propriedades de um pull request & \texttt{gh pr edit 15 -{-}title "Novo Título"} \\
+    \hline
+    gh pr & list & Lista pull requests do repositório & \texttt{gh pr list -{-}state open} \\
+    \hline
+    gh pr & merge & Mescla um pull request & \texttt{gh pr merge 15 -{-}squash} \\
+    \hline
+    gh pr & ready & Marca um pull request como pronto para revisão & \texttt{gh pr ready 15} \\
+    \hline
+    gh pr & reopen & Reabre um pull request fechado & \texttt{gh pr reopen 15} \\
+    \hline
+    gh pr & review & Adiciona uma revisão a um pull request & \texttt{gh pr review 15 -{-}approve} \\
+    \hline
+    gh pr & status & Mostra o status dos pull requests relevantes & \texttt{gh pr status} \\
+    \hline
+    gh pr & view & Exibe detalhes de um pull request específico & \texttt{gh pr view 15} \\
+    \hline
+    gh pr & checkout & Faz checkout da branch de um pull request & \texttt{gh pr checkout 15} \\
+    \hline
+    gh release & create & Cria um novo release & \texttt{gh release create v1.0.0 -{-}title "Versão 1.0.0"} \\
+    \hline
+    gh release & delete & Remove um release específico & \texttt{gh release delete v1.0.0} \\
+    \hline
+    gh release & download & Baixa os assets de um release & \texttt{gh release download v1.0.0} \\
+    \hline
+    gh release & list & Lista todos os releases do repositório & \texttt{gh release list} \\
+    \hline
+    gh release & upload & Faz upload de assets para um release & \texttt{gh release upload v1.0.0 arquivo.zip} \\
+    \hline
+    gh release & view & Exibe detalhes de um release específico & \texttt{gh release view v1.0.0} \\
+    \hline
+    gh release & edit & Edita propriedades de um release existente & \texttt{gh release edit v1.0.0 -{-}title "Novo Título"} \\
+    \hline
+    gh repo & archive & Arquiva um repositório & \texttt{gh repo archive owner/repo} \\
+    \hline
+    gh repo & clone & Clona um repositório para o sistema local & \texttt{gh repo clone owner/repo} \\
+    \hline
+    gh repo & create & Cria um novo repositório & \texttt{gh repo create meu-repo -{-}public} \\
+    \hline
+    gh repo & delete & Remove um repositório & \texttt{gh repo delete owner/repo} \\
+    \hline
+    gh repo & edit & Edita propriedades de um repositório & \texttt{gh repo edit -{-}description "Nova descrição"} \\
+    \hline
+    gh repo & fork & Cria um fork de um repositório & \texttt{gh repo fork owner/repo} \\
+    \hline
+    gh repo & list & Lista repositórios do usuário ou organização & \texttt{gh repo list -{-}limit 10} \\
+    \hline
+    gh repo & rename & Renomeia um repositório & \texttt{gh repo rename novo-nome} \\
+    \hline
+    gh repo & sync & Sincroniza um fork com seu repositório upstream & \texttt{gh repo sync} \\
+    \hline
+    gh repo & view & Exibe detalhes de um repositório & \texttt{gh repo view owner/repo} \\
+    \hline
+    gh repo & deploy-key & Gerencia chaves de deploy do repositório & \texttt{gh repo deploy-key add chave.pub -{-}title "Servidor"} \\
+    \hline
+    gh repo & secret & Gerencia secrets do repositório & \texttt{gh repo secret set API\textunderscore KEY -{-}body "valor"} \\
+    \hline
+    gh run & cancel & Cancela uma execução de workflow & \texttt{gh run cancel 123456789} \\
+    \hline
+    gh run & delete & Remove execuções de workflow & \texttt{gh run delete 123456789} \\
+    \hline
+    gh run & download & Baixa artifacts de uma execução & \texttt{gh run download 123456789} \\
+    \hline
+    gh run & list & Lista execuções de workflows & \texttt{gh run list} \\
+    \hline
+    gh run & rerun & Reexecuta um workflow falho & \texttt{gh run rerun 123456789} \\
+    \hline
+    gh run & view & Exibe detalhes de uma execução & \texttt{gh run view 123456789} \\
+    \hline
+    gh run & watch & Monitora uma execução em tempo real & \texttt{gh run watch 123456789} \\
+    \hline
+    gh search & code & Busca por código no GitHub & \texttt{gh search code "função javascript"} \\
+    \hline
+    gh search & commits & Busca por commits & \texttt{gh search commits "fix bug" -{-}author=user} \\
+    \hline
+    gh search & issues & Busca por issues e pull requests & \texttt{gh search issues "bug label:bug"} \\
+    \hline
+    gh search & prs & Busca especificamente por pull requests & \texttt{gh search prs "feature state:open"} \\
+    \hline
+    gh search & repos & Busca por repositórios & \parbox{3cm}{\texttt{gh search repos "topic:machine-learning"}} \\
+    \hline
+    gh search & users & Busca por usuários & \texttt{gh search users "nome location:Brasil"} \\
+    \hline
+    gh secret & list & Lista secrets disponíveis & \texttt{gh secret list} \\
+    \hline
+    gh secret & remove & Remove um secret específico & \texttt{gh secret remove API\textunderscore KEY} \\
+    \hline
+    gh secret & set & Define ou atualiza um secret & \texttt{gh secret set API\textunderscore KEY -{-}body "valor"} \\
+    \hline
+    gh ssh-key & add & Adiciona uma chave SSH à conta & \texttt{gh ssh-key add chave.pub -{-}title "Laptop"} \\
+    \hline
+    gh ssh-key & list & Lista chaves SSH da conta & \texttt{gh ssh-key list} \\
+    \hline
+    gh ssh-key & delete & Remove uma chave SSH & \texttt{gh ssh-key delete 123} \\
+    \hline
+    gh workflow & disable & Desabilita um workflow & \texttt{gh workflow disable "CI Tests"} \\
+    \hline
+    gh workflow & enable & Habilita um workflow & \texttt{gh workflow enable "CI Tests"} \\
+    \hline
+    gh workflow & list & Lista workflows disponíveis & \texttt{gh workflow list} \\
+    \hline
+    gh workflow & run & Executa um workflow manualmente & \texttt{gh workflow run "CI Tests"} \\
+    \hline
+    gh workflow & view & Exibe detalhes de um workflow & \texttt{gh workflow view "CI Tests"} \\
+    \hline
+\end{longtable}

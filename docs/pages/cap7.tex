@@ -1,0 +1,82 @@
+\chapter{GitHub Pages e GitHub Actions}
+
+\section{O que é GitHub Pages?}
+GitHub Pages é uma ferramenta gratuita oferecida pelo GitHub para hospedagem de sites estáticos diretamente a partir de um repositório. Essa funcionalidade permite que desenvolvedores publiquem páginas web com tecnologias como \textbf{HTML}, \textbf{CSS} e \textbf{JavaScript}, sem a necessidade de servidores adicionais ou configuração complexa.
+
+Entre as principais características do GitHub Pages, podemos destacar:
+\begin{itemize}
+    \item \textbf{Hospedagem gratuita:} todo repositório público pode gerar uma página web sem custos.
+    \item \textbf{Suporte a domínios personalizados:} é possível usar seu próprio domínio, além do subdomínio padrão do GitHub (\texttt{username.github.io}).
+    \item \textbf{Atualização automática:} sempre que você faz um \textit{push} no repositório, o site é atualizado automaticamente.
+    \item \textbf{Compatibilidade com geradores de site estático:} ferramentas como \textit{Jekyll}, \textit{Hugo} e \textit{Eleventy} podem ser integradas facilmente.
+\end{itemize}
+
+\textbf{Exemplo de uso:} um repositório com um arquivo \texttt{index.html} na branch \texttt{main} pode ser publicado acessando o GitHub Pages nas configurações do repositório, sem qualquer configuração adicional.
+
+\section{O que é GitHub Actions?}
+O GitHub Actions é uma plataforma de automação que permite criar fluxos de trabalho (\textit{workflows}) para automatizar tarefas de desenvolvimento. Ele funciona diretamente no GitHub, sem necessidade de servidores externos, e pode ser usado para:
+\begin{itemize}
+    \item \textbf{Testes automatizados:} executar testes sempre que houver alterações no código.
+    \item \textbf{Compilação e \textit{build} de projetos:} gerar executáveis, bibliotecas ou pacotes para diferentes plataformas.
+    \item \textbf{Publicação automática:} enviar versões de aplicativos ou páginas web para ambientes de produção.
+    \item \textbf{Integração contínua (CI) e entrega contínua (CD):} garantir que o código enviado para o repositório esteja sempre funcional.
+\end{itemize}
+
+\textbf{Estrutura de um workflow:}  
+Um workflow é definido por arquivos YAML dentro da pasta \texttt{.github/workflows/} do repositório e consiste basicamente em:
+\begin{itemize}
+    \item \texttt{name:} nome do workflow.
+    \item \texttt{on:} eventos que disparam o workflow, como \texttt{push}, \texttt{pull\_request}, etc.
+    \item \texttt{jobs:} conjunto de tarefas a serem executadas.
+    \item \texttt{steps:} etapas dentro de cada job, que podem incluir instalação de dependências, execução de scripts, testes, builds e deploy.
+\end{itemize}
+
+\section{Integração entre GitHub Pages e GitHub Actions}
+A integração entre GitHub Pages e GitHub Actions permite automatizar a publicação de sites sempre que o código for atualizado. Esse processo envolve:
+\begin{enumerate}
+    \item Configuração do repositório para hospedar o site na branch \texttt{gh-pages} ou na pasta \texttt{/docs}.
+    \item Criação de um workflow no GitHub Actions, geralmente disparado pelo evento \texttt{push} na branch principal (\texttt{main}).
+    \item Etapas do workflow típicas:
+    \begin{itemize}
+        \item \textbf{Instalação de dependências:} por exemplo, instalar Node.js e pacotes necessários.
+        \item \textbf{Compilação do site:} gerar os arquivos finais (\texttt{HTML, CSS, JS}).
+        \item \textbf{Publicação:} enviar os arquivos para a branch ou pasta configurada para GitHub Pages.
+    \end{itemize}
+    \item Verificação: após o deploy, o site é atualizado automaticamente, podendo ser acessado pelo domínio configurado.
+\end{enumerate}
+
+\textbf{Exemplo de arquivo de workflow simples (\texttt{deploy.yml}):}
+\begin{verbatim}
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Build site
+        run: npm run build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+\end{verbatim}
+
+\textbf{Benefícios da integração:}
+\begin{itemize}
+    \item Atualização automática do site sem intervenção manual.
+    \item Garantia de que apenas código validado e testado seja publicado.
+    \item Possibilidade de incluir etapas adicionais, como otimização de imagens, minificação de CSS/JS e execução de testes automatizados antes do deploy.
+\end{itemize}

@@ -1,0 +1,460 @@
+\chapter{Exercícios Práticos}
+
+\textbf{Observação:} Todas as atividades devem seguir as boas práticas de commits, merges e pull requests.
+
+\section{Git e GitHub-CLI}
+
+\subsection{Objetivo}
+Verificar se as ferramentas estão instaladas corretamente.
+
+\subsection{Passo a Passo Detalhado}
+
+\begin{enumerate}
+    \item \textbf{Abrir o terminal} (Prompt de Comando no Windows, Terminal no Mac/Linux)
+    
+    \item \textbf{Verificar se o Git está instalado:}
+    \begin{verbatim}
+    git --version
+    \end{verbatim}
+    \textit{Resultado esperado:} Deve aparecer algo como \texttt{git version 2.xx.x}
+    
+    \item \textbf{Verificar se o GitHub CLI está instalado:}
+    \begin{verbatim}
+    gh --version
+    \end{verbatim}
+    \textit{Resultado esperado:} Deve aparecer algo como \texttt{gh version 2.xx.x}
+\end{enumerate}
+
+\subsection{Problemas Comuns e Soluções}
+\begin{itemize}
+    \item Se algum comando não for reconhecido, reinstale a ferramenta
+    \item No Windows, talvez seja necessário reiniciar o computador após a instalação
+\end{itemize}
+
+\section{Criar um repositório no GitHub via CLI}
+
+\subsection{Objetivo}
+Criar um repositório público com descrição.
+
+\subsection{Pré-requisito}
+Fazer login no GitHub CLI:
+\begin{verbatim}
+gh auth login
+\end{verbatim}
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Criar o repositório:}
+    \begin{verbatim}
+    gh repo create meu-primeiro-repo --public 
+    --description "Meu primeiro repositório" --clone
+    \end{verbatim}
+    
+    \item \textbf{Entrar na pasta do repositório:}
+    \begin{verbatim}
+    cd meu-primeiro-repo
+    \end{verbatim}
+\end{enumerate}
+
+\subsection{README.md}
+
+\subsubsection{O que é README.md}
+\begin{itemize}
+    \item É a "cara" do seu projeto no GitHub
+    \item Explica o que seu projeto faz, como usar, etc.
+    \item Usa uma linguagem chamada Markdown (por isso o .md)
+\end{itemize}
+
+\subsubsection{Como Criar}
+\begin{enumerate}
+    \item \textbf{Criar o arquivo:}
+    \begin{verbatim}
+    echo "# Meu Primeiro Projeto" >> README.md
+    \end{verbatim}
+    
+    \item \textbf{Adicionar conteúdo:}
+    \begin{verbatim}
+    # Meu Primeiro Projeto
+     
+    Este é meu primeiro repositório no GitHub!
+     
+    ## O que este projeto faz?
+     
+    - Aprender Git e GitHub
+    - Praticar comandos
+    - Compartilhar conhecimento
+     
+    ## Como usar?
+     
+    1. Clone este repositório
+    2. Siga as instruções
+    3. Aprenda!
+    \end{verbatim}
+    
+    \item \textbf{Salvar e enviar para o GitHub:}
+    \begin{verbatim}
+    git add README.md
+    git commit -m "docs(readme): Adiciona README com 
+    a descrição do projeto"
+    git push origin main
+    \end{verbatim}
+    Em \texttt{git push origin main}, pode ser colocado a flag \texttt{-u}, ou seja, \texttt{git push -u origin main} isso precisará ser feito apenas uma vez os próximos pushes poderão apenas se fazer com \texttt{git push}.
+    A flag -u faz com que o git se torne um colaborador do repositório, ou seja, ele não precisa mais digitar origin e main, ele já sabe que é o repositório principal.
+\end{enumerate}
+
+\subsection{LICENSE}
+
+\subsubsection{Por que usar LICENSE}
+\begin{itemize}
+    \item Define como outras pessoas podem usar seu código
+    \item Protege seus direitos autorais
+    \item Torna seu projeto mais profissional
+\end{itemize}
+
+\subsubsection{Como Adicionar Licença MIT}
+\begin{enumerate}
+    \item \textbf{Criar arquivo LICENSE:}
+    \begin{verbatim}
+    touch LICENSE
+    \end{verbatim}
+    
+    \item \textbf{Adicionar conteúdo da licença MIT:}
+    \begin{lstlisting}[caption={Licença MIT},label=lst:mit-license]
+    MIT License
+
+    Copyright (c) [ano] [seu nome]
+
+    Permission is hereby granted, free of charge, to any person 
+    obtaining a copy of this software and associated documentation 
+    files (the "Software"), to deal in the Software without 
+    restriction, including without limitation the rights to use, 
+    copy, modify, merge, publish, distribute, sublicense, and/or 
+    sell copies of the Software, and to permit persons to whom 
+    the Software is furnished to do so, subject to the following 
+    conditions:
+
+    The above copyright notice and this permission notice shall 
+    be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+    OTHER DEALINGS IN THE SOFTWARE.
+    \end{lstlisting}
+    
+    \item \textbf{Substituir \texttt{[ano]} e \texttt{[seu nome]} pelos seus dados}
+    
+    \item \textbf{Salvar e enviar:}
+    \begin{verbatim}
+    git add LICENSE
+    git commit -m "chore(licensing):Adiciona licença MIT"
+    git push origin main
+    \end{verbatim}
+\end{enumerate}
+
+\section{Clonando um repositório do GitHub}
+
+\subsection{Objetivo}
+Aprender a baixar repositórios existentes.
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Repositório alvo: https://github.com/ronidomingues/github-capacitation}
+    
+    \item \textbf{Copiar a URL do repositório}
+    
+    \item \textbf{No terminal, clonar:}
+    \begin{verbatim}
+    git clone https://github.com/ronidomingues/
+    github-capacitation.git
+    \end{verbatim}
+    
+    \item \textbf{Entrar na pasta criada:}
+    \begin{verbatim}
+    cd github-capacitation
+    \end{verbatim}
+    
+    \item \textbf{Verificar o conteúdo:}
+    \begin{verbatim}
+    ls -la
+    \end{verbatim}
+\end{enumerate}
+
+\section{Github Pages}
+
+\subsection{Objetivo}
+Publicar um site gratuitamente.
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Criar novo repositório:}
+    \begin{verbatim}
+    gh repo create meu-site --public 
+    --description "Meu primeiro site" --clone
+    cd meu-site
+    \end{verbatim}
+    
+    \item \textbf{Copiar os arquivos do jogo} (HTML, CSS, JS) para a pasta do repositório
+    
+    \item \textbf{Verificar estrutura:}
+    \begin{verbatim}
+    ls -la
+    \end{verbatim}
+    
+    \item \textbf{Adicionar, commitar e enviar:}
+    \begin{verbatim}
+    git add .
+    git commit -m "feat(jogo): adiciona arquivos do jogo"
+    git push origin main
+    \end{verbatim}
+    
+    \item \textbf{Ativar GitHub Pages:}
+    \begin{itemize}
+        \item No GitHub, vá em \textbf{Settings} → \textbf{Pages}
+        \item Em \textbf{Source}, selecione \textbf{main branch}
+        \item Clique \textbf{Save}
+    \end{itemize}
+    
+    \item \textbf{Acessar seu site:}
+    \begin{itemize}
+        \item URL será: \texttt{https://seu-usuario.github.io/meu-site}
+    \end{itemize}
+\end{enumerate}
+
+\section{Github Actions}
+
+\subsection{Objetivo}
+Automatizar execução de código Python.
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Criar repositório para o código Python:}
+    \begin{verbatim}
+    gh repo create meu-script-python --public 
+    --description "Script Python com GitHub Actions" --clone
+    cd meu-script-python
+    \end{verbatim}
+    
+    \item \textbf{Copiar o arquivo Python fornecido para o repositório}
+    
+    \item \textbf{Criar pasta para workflows:}
+    \begin{verbatim}
+    mkdir -p .github/workflows
+    \end{verbatim}
+    
+    \item \textbf{Criar arquivo de workflow:}
+    \begin{verbatim}
+    touch .github/workflows/python.yml
+    \end{verbatim}
+    
+    \item \textbf{Adicionar conteúdo ao workflow - Prencher o que falta:}
+    \par
+    Há um miodelo com \texttt{fortran 90}, disponível na pasta materials.
+    \begin{verbatim}
+        name: "Executar script Python e Commitar resultado"
+
+        on:
+          push:
+            branches: [ main ]
+          workflow_dispatch:
+
+        jobs:
+          build-run:
+            runs-on: ubuntu-latest
+            steps:
+                # 1️⃣ Faz o clone do repositório para a VM Ubuntu;
+                # 2️⃣ Configura o Python a ser usado pela VM;
+                -name: Instalar Python3
+                uses: actions/setup-python@v5
+                with:
+                  python-version: '3.x'
+                # 3️⃣ Executa o script Python;
+                # 4️⃣ Cria um commit com o resultado;
+                -name: Commitar PDFs gerados
+                run: |
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions
+                    [bot]@users.noreply.github.com"
+                    git add materials/*.pdf
+                    git commit -m "Atualizar PDFs compilados
+                    automaticamente [skip ci]" || echo "Nenhuma
+                    alteração para commitar"
+                    git push
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    \end{verbatim}
+    \subsection{Uso de \texttt{[skip ci]} no GitHub Actions}
+
+No GitHub Actions, um workflow normalmente é disparado por eventos como:
+
+\begin{verbatim}
+on:
+  push:
+    branches:
+      - main
+\end{verbatim}
+
+Ou seja, \textbf{cada \texttt{git push}} aciona o workflow.  
+
+Quando o próprio workflow realiza um commit e push automaticamente (por exemplo, atualizando arquivos gerados ou listas), isso poderia disparar o workflow novamente, criando um \textbf{loop infinito}.  
+
+Para evitar esse problema, é possível incluir no commit uma anotação especial:
+
+\begin{verbatim}
+git commit -m "Atualiza lista automática [skip ci]"
+\end{verbatim}
+
+O código \texttt{[skip ci]} instrui o GitHub Actions (e outros sistemas de CI, como GitLab CI ou Travis CI) a \textbf{ignorar este commit}, ou seja, não disparar nenhum workflow.  
+
+Dessa forma, o workflow pode atualizar arquivos ou fazer commits automaticamente sem reiniciar seu próprio processo indefinidamente.  
+
+\textbf{Observação:} Além de \texttt{[skip ci]}, também é possível usar \texttt{[ci skip]}, que possui a mesma função.
+
+    \item \textbf{Adicionar, commitar e enviar tudo:}
+    \begin{verbatim}
+    git add .
+    git commit -m "feat:Adiciona script Python e GitHub Actions"
+    git push origin main
+    \end{verbatim}
+    
+    \item \textbf{Verificar execução:}
+    \begin{itemize}
+        \item No GitHub, vá em \textbf{Actions} para ver o workflow rodando
+    \end{itemize}
+\end{enumerate}
+
+\section{Merge}
+
+\subsection{Objetivo}
+Aprender a juntar alterações de diferentes origens.
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Fazer alteração REMOTA:}
+    \begin{itemize}
+        \item No GitHub, edite o README.md online
+        \item Adicione uma linha no final
+        \item Commit a alteração
+    \end{itemize}
+    
+    \item \textbf{Fazer alteração LOCAL:}
+    \begin{verbatim}
+    # No seu computador, no mesmo repositório
+    echo "Alteração local" >> arquivo-local.txt
+    git add arquivo-local.txt
+    git commit -m "Adiciona arquivo local"
+    \end{verbatim}
+    
+    \item \textbf{Tentar enviar alteração local:}
+    \begin{verbatim}
+    git push origin main
+    # VAI DAR ERRO! Porque tem alteração remota 
+    # que você não tem localmente
+    \end{verbatim}
+    
+    \item \textbf{Fazer merge:}
+    \begin{verbatim}
+    git pull origin main
+    # Isso baixa as alterações remotas e faz merge 
+    # com suas alterações locais
+    \end{verbatim}
+    
+    \item \textbf{Resolver conflitos (se houver):}
+    \begin{itemize}
+        \item Se Git não conseguir juntar automaticamente, ele pedirá para resolver manualmente
+        \item Abra os arquivos com conflitos, resolva e depois:
+        \begin{verbatim}
+        git add .
+        git commit -m "Resolve conflitos de merge"
+        git push origin main
+        \end{verbatim}
+    \end{itemize}
+\end{enumerate}
+
+\section{Pull Request}
+
+\subsection{Objetivo}
+Contribuir para projetos de outras pessoas.
+
+\subsection{Passo a Passo}
+\begin{enumerate}
+    \item \textbf{Fork do repositório original:}
+    \begin{itemize}
+        \item No GitHub, vá para o repositório \url{https://github.com/ronidomingues/github-capacitation}
+        \item Clique em \textbf{Fork} (canto superior direito)
+        \item Isso cria uma cópia em sua conta
+    \end{itemize}
+    
+    \item \textbf{Clonar SEU fork:}
+    \begin{verbatim}
+    git clone https://github.com/seu-usuario/
+    repositorio-forkado.git
+    cd repositorio-forkado
+    \end{verbatim}
+    
+    \item \textbf{Criar branch para sua feature:}
+    \begin{verbatim}
+    git checkout -b minha-feature
+    \end{verbatim}
+    
+    \item \textbf{Fazer suas alterações:}
+    \par Entre na pasta \texttt{presences} e adicione um arquivo \texttt{.txt} com o seu nome, por exemplo \texttt{roni.txt}, esse arquivo não precisa ter nenhum conteúdo, mas se queiser deixar uma avaliação de tudo até aqui será ótimo $\left. ;- \right)$.
+    \begin{verbatim}
+    echo "Minha avaliacao" >> presences/meu-nome.txt
+    \end{verbatim}
+    
+    \item \textbf{Commit e push:}
+    \begin{verbatim}
+    git add .
+    git commit -m "<tipo>(escopo): <descrição>"
+    git push origin minha-feature
+    \end{verbatim}
+    
+    \item \textbf{Criar Pull Request:}
+    \begin{itemize}
+        \item No GitHub, vá para SEU fork
+        \item Clique em \textbf{Pull Request} → \textbf{New Pull Request}
+        \item Selecione: base (repositório original) ← compare (sua branch)
+        \item Descreva suas alterações
+        \item Clique \textbf{Create Pull Request}
+    \end{itemize}
+\end{enumerate}
+
+\section{Materiais de Apoio}
+
+\subsection{Checklist para Cada Exercício}
+\begin{itemize}
+    \item [$\square$] Comandos executados sem erro
+    \item [$\square$] Arquivos criados corretamente
+    \item [$\square$] Commits com mensagens descritivas
+    \item [$\square$] Push realizado com sucesso
+    \item [$\square$] Resultado verificado no GitHub
+\end{itemize}
+
+\subsection{Comandos Úteis para Consulta}
+\begin{verbatim}
+# Status do repositório
+git status
+
+# Ver histórico de commits
+git log --oneline
+
+# Ver diferenças
+git diff
+
+# Ver configuração
+git config --list
+\end{verbatim}
+
+\subsection{Dicas para Boas Práticas}
+\begin{itemize}
+    \item Commits frequentes e pequenos
+    \item Mensagens de commit claras e descritivas
+    \item Sempre fazer pull antes de push
+    \item Testar localmente antes de enviar
+    \item Revisar código antes de criar PR
+\end{itemize}
