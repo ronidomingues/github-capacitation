@@ -6,31 +6,31 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # 👈 isso libera o GITHUB_TOKEN para fazer commits
+  contents: write # 👈 isso libera o GITHUB_TOKEN para fazer commits;
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
     steps:
-      # 1️⃣ Pegar os arquivos do repositório
+      # 1️⃣ Pegar os arquivos do repositório;
       - name: 📥 Checkout repositório
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # 👈 necessário para fazer commits
-          token: ${{ secrets.GITHUB_TOKEN }}  # 👈 garante que o checkout usa o token com permissão
+          token: ${{ secrets.GITHUB_TOKEN }}  # 👈 garante que o checkout usa o token com permissão;
 
-      # 2️⃣ Configurar o ambiente Python e LaTeX
+      # 2️⃣ Configurar o ambiente Python e LaTeX;
       - name: 🐍 Instalar Python 3
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-       # 3️⃣ Gerar a lista de presença (presence_list.tex)
+       # 3️⃣ Gerar a lista de presença (presence_list.tex);
       - name: 🧾 Gerar lista de presenças
         run: python3 scripts/generate_presence_list.py
 
-      # 4️⃣ Instalar LaTeX e dependências
+      # 4️⃣ Instalar LaTeX e dependências;
       - name: 📦 Instalar LaTeX e dependências
         run: |
           sudo apt-get update
@@ -40,9 +40,7 @@ jobs:
           sudo apt-get install -y texlive-full 
           sudo apt-get install -y latexmk
 
-      # 5️⃣ Compilar todos os arquivos .tex da pasta materials
-      # Meu erro aqui é que na pasta materials tem um arquivo .tex que não compila (ele não possui cabeçalho LaTeX é um arquivo auxiliar)
-      # Então corrigi com um if para pular esse arquivo específico - (tempo para a localização do erro: 2hs)
+      # 5️⃣ Compilar todos os arquivos .tex da pasta docs;
       - name: 🧱 Compilar todos os arquivos .tex
         run: |
           # Entra na pasta docs;
@@ -50,15 +48,11 @@ jobs:
           # Loop para compilar todos os arquivos .tex da pasta
           for texfile in *.tex; do
             echo "Compilando $texfile ..."
-            if [ "$texfile" = "presence_list.tex" ]; then
-              echo "Pulando presence_list.tex (arquivo auxiliar)"
-              continue
-            fi
             # Compilação dos arquivos .tex permitidos;
             latexmk -xelatex -interaction=nonstopmode -f "$texfile"
           done
 
-      # 6️⃣ Commitar PDFs gerados
+      # 6️⃣ Commitar PDFs gerados;
       - name: 💾 Commitar PDFs gerados
         run: |
           # Entrando na pasta docs novamente;
