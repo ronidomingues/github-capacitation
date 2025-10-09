@@ -3,6 +3,10 @@ name: Build LaTeX and Commit PDF
 on:
   push:
     branches: [ main ]
+#    paths:
+#      - 'presences/*.txt' # 👈 apenas roda se houver alterações na pasta presences;
+#      - 'scripts/*.py' # 👈 apenas roda se houver alterações na pasta scripts;
+#      - '!docs/*.pdf' # 👈 ignor se houver alterações em arquivos .pdf da pasta docs;
   workflow_dispatch:
 
 permissions:
@@ -10,6 +14,8 @@ permissions:
 
 jobs:
   build:
+    # 👇 O job apenas roda se o autor do commit for diferente de github-actions[bot];
+    if: ${{ github.event.head_commit.author.name != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
     
     steps:
